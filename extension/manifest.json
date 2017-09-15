@@ -12,15 +12,15 @@
    } ],
    "icons": {
       "128": "icons/icon-128.png",
-      "16": "icons/icon-16.png",
-      "48": "icons/icon-48.png"
+      "48": "icons/icon-48.png",
+      "16": "icons/icon-16.png"
    },
    "offline_enabled": true,
    "permissions": [
       "notifications",
       "tabs",
-      "https://open.spotify.com/*",
+      "https://open.spotify.com/*"
    ],
-   "version": "2017-09",
+   "version": "2017.09",
    "minimum_chrome_version" : "37"
 }
