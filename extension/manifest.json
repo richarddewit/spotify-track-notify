@@ -21,6 +21,6 @@
       "notifications",
       "https://open.spotify.com/*"
    ],
-   "version": "2017.09",
+   "version": "1.0",
    "minimum_chrome_version" : "42"
 }
