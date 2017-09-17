@@ -19,7 +19,6 @@
    "offline_enabled": true,
    "permissions": [
       "notifications",
-      "tabs",
       "https://open.spotify.com/*"
    ],
    "version": "2017.09",
