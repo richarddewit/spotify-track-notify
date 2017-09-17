@@ -28,35 +28,45 @@
 
 (function() {
   'use strict';
-
-  const id = 'spotify-track-notify';
-  const pollInterval = 1000;
-  const channel = chrome.extension.connect({ name: id });
-  let trackInfo = '';
-  const observer = setInterval(function() {
-    let ti = document.querySelector('.now-playing .track-info').innerText;
-    if (ti !== trackInfo) {
-      let coverImage;
-      try {
-        coverImage = document.querySelector('.now-playing .cover-art-image').style.backgroundImage.replace(/url\("?'?([^"'\)]+)"?\)/gi, '$1');
-      } catch (e) {}
-
-      trackInfo = ti;
-      channel.postMessage(['TRACK_CHANGED', trackInfo, coverImage]);
-    }
-  }, pollInterval);
-
-  channel.onMessage.addListener((msg, channel) => {
-  if (channel.name === id) {
-    switch (msg) {
-      case 'GO_BACK':
-        document.querySelector('.control-button.spoticon-skip-back-16').click();
-        break;
-
-      case 'GO_FORWARD':
-        document.querySelector('.control-button.spoticon-skip-forward-16').click();
-        break;
-    }
+  if (document.readyState === 'complete') {
+    init();
+  } else {
+    window.onload = init;
   }
-});
+
+  function init() {
+    const id = 'spotify-track-notify';
+    const previousSelector = '.control-button.spoticon-skip-back-16';
+    const nextSelector = '.control-button.spoticon-skip-forward-16';
+    const pollInterval = 1000;
+    const channel = chrome.extension.connect({ name: id });
+    let trackInfo = '';
+
+    const observer = setInterval(function() {
+      let ti = document.querySelector('.now-playing .track-info').innerText;
+      if (ti !== trackInfo) {
+        let coverImage;
+        try {
+          coverImage = document.querySelector('.now-playing .cover-art-image').style.backgroundImage.replace(/url\("?'?([^"'\)]+)"?\)/gi, '$1');
+        } catch (e) {}
+
+        trackInfo = ti;
+        channel.postMessage(['TRACK_CHANGED', trackInfo, coverImage]);
+      }
+    }, pollInterval);
+
+    channel.onMessage.addListener((msg, channel) => {
+      if (channel.name === id) {
+        switch (msg) {
+          case 'GO_BACK':
+            document.querySelector(previousSelector).click();
+            break;
+
+          case 'GO_FORWARD':
+            document.querySelector(nextSelector).click();
+            break;
+        }
+      }
+    });
+  };
 })();
