@@ -78,10 +78,7 @@
   function createAndSendNotification(message, imageUrl) {
     if (!imageUrl) {
       // Send with default icon
-      return sendNotification({
-        message,
-        buttons: [{ title: 'Learn More' }],
-      });
+      return sendNotification({ message });
     }
 
     // Convert image to base64 data URI and send notification with it
@@ -95,7 +92,6 @@
         sendNotification({
           message,
           iconUrl: c.toDataURL(),
-          buttons: [{ title: 'Learn More' }],
         });
       }
     })(message);
