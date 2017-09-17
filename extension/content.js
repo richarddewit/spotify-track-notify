@@ -29,9 +29,11 @@
 (function() {
   'use strict';
 
+  const id = 'spotify-track-notify';
+  const pollInterval = 1000;
+  const channel = chrome.extension.connect({ name: id });
   let trackInfo = '';
-  const favicon = (document.querySelector('link[rel="icon"]') || {}).href || 'https://open.scdn.co/static/images/favicon.png' || 'icons/icon-128.png';
-  const observeInterval = setInterval(function() {
+  const observer = setInterval(function() {
     let ti = document.querySelector('.now-playing .track-info').innerText;
     if (ti !== trackInfo) {
       let coverImage;
@@ -40,20 +42,7 @@
       } catch (e) {}
 
       trackInfo = ti;
-      showTrackInfoNotification(trackInfo, coverImage);
+      channel.postMessage(['TRACK_CHANGED', trackInfo, coverImage]);
     }
-  }, 1000);
-
-  checkNotificationPermission();
-
-  function checkNotificationPermission() {
-    if (Notification.permission !== 'granted') {
-      Notification.requestPermission();
-    }
-  }
-
-  function showTrackInfoNotification(body, icon = favicon) {
-    checkNotificationPermission();
-    new Notification('Spotify', { icon, body });
-  }
+  }, pollInterval);
 })();

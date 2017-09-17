@@ -2,16 +2,17 @@
    "manifest_version": 2,
    "name": "Spotify Track Notify",
    "description": "Sends a notification with the track info when playing a different track",
-   "developer": {
-      "name" :"Richard de Wit"
-   },
    "content_scripts": [ {
-      "js": [ "script.js" ],
-      "matches": [ "https://open.spotify.com/*" ],
+      "js": ["content.js"],
+      "matches": ["https://open.spotify.com/*"],
       "run_at": "document_end"
    } ],
+   "background": {
+      "scripts": ["background.js"]
+   },
    "icons": {
       "128": "icons/icon-128.png",
+      "64": "icons/icon-64.png",
       "48": "icons/icon-48.png",
       "16": "icons/icon-16.png"
    },
@@ -22,5 +23,5 @@
       "https://open.spotify.com/*"
    ],
    "version": "2017.09",
-   "minimum_chrome_version" : "37"
+   "minimum_chrome_version" : "42"
 }
