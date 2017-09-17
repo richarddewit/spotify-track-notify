@@ -38,6 +38,10 @@
     title: 'Now playing',
     message: 'Next track',
     isClickable: true,
+    buttons: [
+      { title: 'Previous', iconUrl: 'icons/step-backward.svg' },
+      { title: 'Next', iconUrl: 'icons/step-forward.svg' },
+    ],
   };
 
   // Prepare image canvas for converting image to base64 data URI
@@ -103,10 +107,6 @@
         sendNotification({
           message,
           iconUrl: c.toDataURL(),
-          buttons: [
-            { title: 'Previous', iconUrl: 'icons/step-backward.svg' },
-            { title: 'Next', iconUrl: 'icons/step-forward.svg' },
-          ],
         });
       }
     })(message);
