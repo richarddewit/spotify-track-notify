@@ -61,6 +61,16 @@
         chrome.notifications.clear(notificationId);
       }
     });
+
+    chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {
+      if (notificationId === id) {
+        if (buttonIndex === 0) {
+          channel.postMessage('GO_BACK');
+        } else if (buttonIndex === 1) {
+          channel.postMessage('GO_FORWARD');
+        }
+      }
+    });
   });
 
   function sendSimpleNotification(message, imageUrl) {
@@ -93,6 +103,10 @@
         sendNotification({
           message,
           iconUrl: c.toDataURL(),
+          buttons: [
+            { title: 'Previous', iconUrl: 'icons/step-backward.svg' },
+            { title: 'Next', iconUrl: 'icons/step-forward.svg' },
+          ],
         });
       }
     })(message);
