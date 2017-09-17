@@ -58,6 +58,7 @@
     chrome.notifications.onClicked.addListener(notificationId => {
       if (notificationId === id) {
         chrome.tabs.update(channel.sender.tab.id, {active: true});
+        chrome.notifications.clear(notificationId);
       }
     });
   });
